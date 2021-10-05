@@ -1,0 +1,42 @@
+% COMPILE WITH LuaLatex !!!
+
+% Other paper formats are possible: aspectratio = 43 (4:3), 169 (16:9)
+%\documentclass[aspectratio=43,handout]{beamer}
+\documentclass[8pt, t,
+aspectratio=169,% for widescreen (16:9) presentations
+%aspectratio=43,% for traditional (4:3) presentations
+%handout,% UNCOMMENT to deactivate slide animation (overlays)
+]{beamer}
+
+\usepackage[utf8]{}
+\usepackage[T1]{fontenc}
+
+% Title and author
+\title{Beamer\\Template} % If needed, manually add line breaks with "\\"
+\author[Dr. sc. Sebastian Schwindt]{Dr. sc. Sebastian Schwindt}
+\subtitle{Example}
+
+\usetheme{lww}
+
+
+\begin{document}
+
+% Create the titlepage
+\maketitle
+
+% Optional: show the outline
+\begin{frame}{Outline}
+	\tableofcontents
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% slides %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{example}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% final slide %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Two options: white and blue bg
+\thankyou{Thank you for listening}{Dr. sc. Sebastian Schwindt}{sebastian.schwindt@iws.uni-stuttgart.de}{+49 (0)711 phone}{theme/logos/drop.png}
+% \thankyoublue{Thank you}{Dr. sc. Sebastian Schwindt}{sebastian.schwindt@iws.uni-stuttgart.de}{+49 (0)711 685 64 789}{theme/logos/drop.png}
+	
+\end{document}
