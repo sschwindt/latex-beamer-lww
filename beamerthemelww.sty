@@ -530,53 +530,12 @@
 
 
 % ---------------------------------------------------------------------------
-% Consistent package loading and settings (added 2025‑05‑02)
+% Code blocks and more
 % ---------------------------------------------------------------------------
 
 %% Core code‑formatting
 \RequirePackage{verbatim}
 \RequirePackage{listings}
-
-%% Rich‑media support
-\RequirePackage{multimedia}
-
-%% Hyperlinks
-\RequirePackage{hyperref}
-
-%% Mathematics
-\RequirePackage{latexsym}
-\RequirePackage{amsmath,amssymb,amsfonts}
-
-%% Graphics & colour
-\RequirePackage{graphicx}
-\RequirePackage{xcolor}
-\RequirePackage{tcolorbox}
-
-%% Text layout helpers
-\RequirePackage{setspace}      %% line spacing
-\RequirePackage{xkeyval}       %% key–value parsing
-\RequirePackage{anyfontsize}   %% arbitrary font sizes
-
-%% Remove duplicate package loads that followed in the original file
-%% ---------------------------------------------------------------------------
-% enable code formatting
-% USAGE
-%\begin{lstlisting}[language=Python]  % Start your code-block
-%	for i:=maxint to 0 do
-%	begin
-%	{ do nothing }
-%	end;
-%	Write('Case insensitive ');
-%	Write('Pascal keywords.');
-%\end{lstlisting}
-% ALTERNATIVE: usage line range of a file:
-% \begin{lstlisting}[language=Python]{source_filename.py} % Start your code-block
-
-
-% pre-define code formats
-\definecolor{string}{rgb}{0.7,0.0,0.0}
-\definecolor{comment}{rgb}{0.13,0.54,0.13}
-\definecolor{keyword}{rgb}{0.0,0.0,1.0}
 
 % Setup lsitings (code block) styles
 \lstset{ 
@@ -614,14 +573,3 @@
 
 \mode<all>
 
-% ---------------------------------------------------------------------------
-% enumitem settings – avoid recursion with Beamer (fixed 2025‑05‑02)
-% ---------------------------------------------------------------------------
-\setitemize[1]{%
-  label=\textbullet,
-  labelindent=0pt,
-  leftmargin=*,
-  labelsep=0.6em,
-  itemsep=0.2em,
-  topsep=0.2em
-}
