@@ -1,52 +1,90 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemelww}[2025-05-02 Sebastian Schwindt -- LWW-IWS Beamer Theme]
+
+% === Core packages ==========================================================
+\RequirePackage{tikz}
+\usetikzlibrary{3d,angles,arrows.meta,calc,intersections,positioning,shadows.blur,shapes.geometric,shapes.symbols}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween}
+\pgfdeclarelayer{bg}
+\RequirePackage{helvet} 
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{hyperref}
+\RequirePackage{varwidth}
+\RequirePackage{multimedia}
+\RequirePackage{latexsym}
+\RequirePackage{amsmath,amssymb,amsfonts}
+\RequirePackage{wrapfig}
+\RequirePackage{setspace}
+\RequirePackage{anyfontsize}
+\RequirePackage{epsfig}
+% --- Work‑around for enumitem+beamer loop (missing \labelenumi) ---
+\makeatletter
+\@ifundefined{labelenumi}{\def\labelenumi{\arabic{enumi}.}}{}
+\@ifundefined{labelenumii}{\def\labelenumii{\alph{enumii})}}{}
+\@ifundefined{labelenumiii}{\def\labelenumiii{\roman{enumiii}.}}{}
+\@ifundefined{labelenumiv}{\def\labelenumiv{\Alph{enumiv}.}}{}
+\makeatother
+% ------------------------------------------------------------------
+\RequirePackage{enumitem}
+\RequirePackage{tcolorbox}
+\RequirePackage[absolute,overlay]{textpos}
+\RequirePackage{caption}
+\RequirePackage{perpage}
+\RequirePackage{fancyhdr}
+\RequirePackage{xkeyval}
+\RequirePackage{colortbl}
+\RequirePackage{tabularray}
+\RequirePackage{pifont}
+\RequirePackage{float}
+\RequirePackage{alltt}
+
+% Defer link color setup until after color definitions
+\AtBeginDocument{
+  \hypersetup{
+    colorlinks=true,
+    linkcolor=unisblue,
+    urlcolor=unisblue,
+    citecolor=blue_med
+  }
+}
+
+% === Begin presentation mode ===============================================
 \mode<presentation>
 
-% tikz
-\RequirePackage{tikz}
-\usetikzlibrary{3d,angles,arrows,arrows.meta,calc,intersections,positioning,shadows.blur,shapes.geometric,shapes.symbols}
-\usepackage{pgfplots}
+% Requirement
+% \usetikzlibrary{3d,angles,arrows,arrows.meta,calc,intersections,overlay-beamer-styles,positioning,shadows.blur,shapes.geometric,shapes.symbols}
 \pgfplotsset{compat=1.11}
 \usepgfplotslibrary{fillbetween}
 \pgfdeclarelayer{bg}
 \pgfsetlayers{bg,main}
-\usepackage{varwidth}
 
-% enable code formatting
-\usepackage{verbatim}
-\usepackage{listings}
-% USAGE
-%\begin{lstlisting}[language=Python]  % Start your code-block
-%	for i:=maxint to 0 do
-%	begin
-%	{ do nothing }
-%	end;
-%	Write('Case insensitive ');
-%	Write('Pascal keywords.');
-%\end{lstlisting}
-% ALTERNATIVE: usage line range of a file:
-% \begin{lstlisting}[language=Python]{source_filename.py} % Start your code-block
-
-\usepackage[normalem]{ulem}
-
-% enable video embedding
-\usepackage{multimedia}
-\usepackage{hyperref}
-
-%packages for mathematical symbols
-\usepackage{latexsym}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsfonts}
-
-%grahics packages
-\usepackage{color,graphicx}
-\usepackage{tcolorbox}
-
-
-% text rendering
-\usepackage{setspace}% Zeilenabstaende
-\usepackage{xkeyval}% text boxes
-\usepackage{helvet} % emulate univers
-\usepackage{anyfontsize}
+% enable gaps on slide handouts
+% EXAMPLE USAGE:
+% \begin{handoutframeselect}[1]
+% \begin{frame}<\slideselection{1}>{boring frame title}
+% FRAMECONTENTS
+% \end{frame}
+% \end{handoutframeselect}
+\makeatletter
+\newif\ifOnBeamerModeTransition
+\newcommand{\slideselection}[1]{#1}%
+\newenvironment{handoutframeselect}[1][1-]{%
+  \begingroup%
+  \mode<handout>{%
+    \gdef\beamer@currentmode{beamer}%
+    \OnBeamerModeTransitiontrue%
+    \renewcommand{\slideselection}[1]{#1}}%
+}{%
+  \ifOnBeamerModeTransition%
+    \OnBeamerModeTransitionfalse%
+    \gdef\beamer@currentmode{handout}%
+  \fi%
+  \endgroup%
+}
+\makeatother
 
 % Settings
 %\useinnertheme{unistuttgart}
@@ -55,7 +93,6 @@
 
 % disable navigation symbols
 \setbeamertemplate{navigation symbols}{}
-\usepackage[absolute,overlay]{textpos}
 % usage:
 % \begin{textblock*}{width}(xcoord,ycoord)
 % whatever you want to put here
@@ -75,8 +112,6 @@
 % }
 
 % headers and footers
-\usepackage{fancyhdr}
-\usepackage{perpage}
 \MakePerPage{footnote}
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 \renewcommand\footnoterule{}
@@ -96,15 +131,12 @@
 
 
 % colors and fonts 
-\usepackage{xcolor}
-\usepackage{colortbl} % add for color in tables
 \definecolor{anthrazit}{RGB}{62,68,76}
 \definecolor{unisblue}{RGB}{0,81,158}
 \definecolor{hellblau}{RGB}{0,190,255}
 \definecolor{red}{rgb}{1,0,0}
 \definecolor{red_warm}{rgb}{0.69,0.17,0.17}
 
-\definecolor{orange_git}{rgb}{1,0.342,0.2}
 \definecolor{orange_light}{rgb}{1,0.85,0.6}
 \definecolor{orange_med}{rgb}{0.753,0.62,0.373}
 \definecolor{orange_dark}{rgb}{0.506,0.412,0.251}
@@ -134,8 +166,7 @@
 \definecolor{med_gray}{gray}{0.85}
 
 \definecolor{lwwblue}{RGB}{130, 176, 226}
-%blue (for URLs)
-\definecolor{blue}{rgb}{0,0,1}
+\definecolor{blue}{rgb}{0,0,1} % URL blue
 
 \setbeamercolor{title}{fg=white}
 \setbeamercolor{date}{fg=white}
@@ -168,13 +199,14 @@
 
 
 % use fancy enumerate/itemize and restore beamer layout
-\usepackage{enumitem}\setitemize{%
-  label=\usebeamerfont*{itemize item}
-  \usebeamercolor[fg]{itemize item}
-  \usebeamertemplate{itemize item}
+\setitemize[1]{%
+  label={\usebeamerfont*{itemize item}\usebeamercolor[fg]{itemize item}\usebeamertemplate{itemize item}},
+  labelindent=0pt,
+  labelsep=0.6em,
+  leftmargin=*,
+  itemsep=0.2em,
+  topsep=0.2em,
 }
-%
-
 % boarders
 \setbeamersize{text margin left=0.08\paperheight,text margin right=0.08\paperheight}
 
@@ -214,25 +246,25 @@
 
 			% Background image
 			\node at (0,\paperheight)[xshift=-0.01\paperheight,yshift=-0.25\paperheight,anchor=north west]
-				{\includegraphics[width=\paperwidth]{theme/title-background}};
+				{\includegraphics[width=\paperwidth]{theme/title-background.jpg}};
 
 			% Uni Stuttgart logo
 			\node at (0,\paperheight)[xshift=-0.055\paperheight,yshift=0.06\paperheight,anchor=north west]
 				{\includegraphics[height=0.29\paperheight]{theme/logos/unistuttgart_logo_englisch.pdf}};
 
 			% large gray circle (for title)
-			\fill[anthrazit,xshift=-0.36\paperheight] (\paperwidth,0.47\paperheight) circle (0.315\paperheight);
+			\fill[anthrazit,opacity=0.85,xshift=-0.36\paperheight] (\paperwidth,0.47\paperheight) circle (0.315\paperheight);
 
 			% small white circle (for logo)
-			\fill[white,xshift=-0.2\paperheight] (\paperwidth,0.2\paperheight) circle (0.09\paperheight);
+			\fill[white,opacity=0.815,xshift=-0.2\paperheight] (\paperwidth,0.2\paperheight) circle (0.09\paperheight);
 			% place lww-logo in circle
 			\node at (\paperwidth,0.2\paperheight)[xshift=-0.2\paperheight]{
-			\includegraphics[height=0.1\paperheight]{theme/logos/lww-logo.pdf}};
+			\includegraphics[height=0.1\paperheight]{theme/logos/lww-logo.png}};
 			
 			% title, name and subtitle
 			\node[anchor=south west,xshift=-0.61\paperheight,white,align=left,text width=0.48\paperheight] at (\paperwidth,0.45\paperheight){{\bf \large \inserttitle\par}};
-			\node[anchor=north west,xshift=-0.61\paperheight,lwwblue,align=left,text width=0.48\paperheight] at (\paperwidth,0.40\paperheight){{\bf \scriptsize \insertauthor\par}};
-			\node[anchor=north west,xshift=-0.61\paperheight,white,align=left,text width=0.48\paperheight] at (\paperwidth,0.35\paperheight){{\tiny \insertsubtitle\par}};
+			\node[anchor=north west,xshift=-0.61\paperheight,white,align=left,text width=0.48\paperheight] at (\paperwidth,0.425\paperheight){{\bf \tiny \insertsubtitle\par}};
+			\node[anchor=north west,xshift=-0.61\paperheight,lwwblue,align=left,text width=0.48\paperheight] at (\paperwidth,0.35\paperheight){{\bf \scriptsize \insertauthor\par}};
 		\end{tikzpicture}
 	}
 		\frame{}
@@ -308,7 +340,7 @@
 			% clip everything to the screen (to control alignment absolutely)
 			\clip (0,0) rectangle (\paperwidth,\paperheight);
 			\fill[shading = axis, left color = unisblue, right color = hellblau, shading angle = 135] (0,0) rectangle (\paperwidth,\paperheight);
-
+			
 			% Uni Stuttgart logo
 			\node at (0,\paperheight)[xshift=-0.055\paperheight,yshift=0.06\paperheight,anchor=north west]
 				{\includegraphics[height=0.29\paperheight]{theme/logos/unistuttgart_logo_englisch_white.pdf}};
@@ -318,7 +350,7 @@
 			\clip[xshift=0.15\paperwidth](0,0.5\paperheight) circle (0.08\paperwidth);
 			\node at (0.15\paperwidth,0.5\paperheight) {\includegraphics[height=0.16\paperwidth]{#5}};
 			\end{scope}
-
+							
 			% Thank you
 			\node[white, xshift=0.07\paperwidth,anchor=west,inner sep = 0] at (0,0.7\paperheight) {\bf\large #1};
 			
@@ -337,12 +369,9 @@
 	\clearpage
 }
 
-
-% ssc particulars
-
 % TIKZSTYLES ----------------------------------------------------------------
-% flowchart elements
 
+% FLOW-CHART ELEMENTS
 % definition boxes with rounded corners
 \tikzstyle{defbox} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=green_dark, fill=green!5, blur shadow={shadow blur steps=5}]
 % start-stop boxes with rounded corners
@@ -360,8 +389,6 @@
 % thick-lined arrows with stealth-type head
 \tikzstyle{arrow} = [thick,->,>=stealth]
 \tikzstyle{biarrow} = [thick,<->,latex-latex]
-% green check mark - usage: \checkmark
-\def\checkmark{\tikz\fill[scale=0.4,draw=green_warm](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;} 
 
 % EXAMPLE USAGE
 % \begin{tikzpicture}[node distance=2cm]
@@ -373,10 +400,6 @@
 % FIGURE SETTINGS -----------------------------------------------------------
 % path to your figures folder
 \graphicspath{{fig/}}
-\usepackage[font=normalsize,labelfont=bf]{caption} % redesign figure captions
-\usepackage{epsfig}
-\usepackage{float} % enables floating figure position [H]
-\usepackage{wrapfig} % for true figure floating
 % usage:
 % \begin{wrapfigure}[lineheight]{position}[overhang]{width}
 %  \vspace{-20pt}
@@ -399,7 +422,7 @@
 \begin{figure}[ht!bp]%
 	\begin{center}%
 		\includegraphics[width= \textwidth]{#2}%
-		\caption[#3]{\small \textcolor{gray}{\textit{#3}}}
+		\caption[#3]{\textit{#3}}
 		\label{#1_#2}%
 	\end{center}%
 \end{figure}%
@@ -407,9 +430,7 @@
 
 % TABLE SETTINGS -----------------------------------------------------------
 %table using the width of the text column
-% \sscTab { YOUR TABULAR DEFINITION }
-%			{ CAPTION TEXT }
-%			{ TABLE_LABEL }
+% \sscTab { TABULAR DEFINITION }{ CAPTION TEXT }{ TABLE_LABEL }
 %
 % \renewcommand{\tablename}{} % remove Table label of table captions
 \newcommand{\sscTab}[3]%
@@ -427,8 +448,6 @@
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 % for horizontal and vertical centering use M:
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
-\usepackage{xcolor}
-\usepackage{tabularray}
 
 % SPECIAL TEXT SETTINGS -----------------------------------------------------
 %typesets a 'nice' underscore for URLs
@@ -438,7 +457,7 @@
 %
 %typesets a URL
 %the typographically correct version appears as a footnote,
-%the anchor appears in the text, the link points to the pristine URL
+%the anchor appears in the text, the link points to the URL
 \newcommand{\sscURL}[2]%
 {%
 	\textcolor{blue}{%
@@ -447,11 +466,9 @@
 }
 
 % DEF BOXES ----------------------------------------------------------------
-% \sscDefBox	{ TERM }
-%			{ DEFINITION }
+% \sscDefBox{ TERM }{ DEFINITION }
 %
 %outputs a margin note and a colored box (width of the text column) containing a term and its definition
-%dimensions 
 \newlength{\sscDefBoxWidth}
 \setlength{\sscDefBoxWidth}{0.5\paperwidth}
 \addtolength{\sscDefBoxWidth}{-4mm}
@@ -465,8 +482,7 @@
 	}%
 }
 
-% \sscBigDefBox	{ TERM }
-%				{ DEFINITION }
+% \sscBigDefBox	{ TERM }{ DEFINITION }
 %
 %outputs a colored box (width of the page) containing a term and its definition
 \newlength{\sscBigDefBoxWidth}
@@ -489,7 +505,75 @@
 \newcommand{\todo}[1]{\mnote{\textcolor{red}{ToDo: #1}}}
 
 % pre-define code formats
-\usepackage{alltt}
+\definecolor{string}{rgb}{0.7,0.0,0.0}
+\definecolor{comment}{rgb}{0.13,0.54,0.13}
+\definecolor{keyword}{rgb}{0.0,0.0,1.0}
+
+% \emptydoublepage
+% Clear double page without any header or footer at end of chapters
+\newcommand{\emptydoublepage}{\clearpage\thispagestyle{empty}\cleardoublepage}
+
+% Define a list style called 'checklist'
+\definecolor{checklistgreen}{RGB}{0,110,0}
+\newcommand{\gcheck}{\textbf{\textcolor{checklistgreen}{\ding{52}}}}
+
+\newenvironment{checklist}{%
+  \begingroup
+    \setlist[itemize,1]{label=\gcheck}
+    \setlist[itemize,2]{label=\gcheck}
+    \setlist[itemize,3]{label=\gcheck}
+    \begin{itemize}
+}{%
+    \end{itemize}
+  \endgroup
+}
+
+
+% ---------------------------------------------------------------------------
+% Consistent package loading and settings (added 2025‑05‑02)
+% ---------------------------------------------------------------------------
+
+%% Core code‑formatting
+\RequirePackage{verbatim}
+\RequirePackage{listings}
+
+%% Rich‑media support
+\RequirePackage{multimedia}
+
+%% Hyperlinks
+\RequirePackage{hyperref}
+
+%% Mathematics
+\RequirePackage{latexsym}
+\RequirePackage{amsmath,amssymb,amsfonts}
+
+%% Graphics & colour
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{tcolorbox}
+
+%% Text layout helpers
+\RequirePackage{setspace}      %% line spacing
+\RequirePackage{xkeyval}       %% key–value parsing
+\RequirePackage{anyfontsize}   %% arbitrary font sizes
+
+%% Remove duplicate package loads that followed in the original file
+%% ---------------------------------------------------------------------------
+% enable code formatting
+% USAGE
+%\begin{lstlisting}[language=Python]  % Start your code-block
+%	for i:=maxint to 0 do
+%	begin
+%	{ do nothing }
+%	end;
+%	Write('Case insensitive ');
+%	Write('Pascal keywords.');
+%\end{lstlisting}
+% ALTERNATIVE: usage line range of a file:
+% \begin{lstlisting}[language=Python]{source_filename.py} % Start your code-block
+
+
+% pre-define code formats
 \definecolor{string}{rgb}{0.7,0.0,0.0}
 \definecolor{comment}{rgb}{0.13,0.54,0.13}
 \definecolor{keyword}{rgb}{0.0,0.0,1.0}
@@ -528,11 +612,16 @@
   {\begin{frame}[fragile,environment=fragileframe]}%
   {\end{frame}}
 
-
-% \emptydoublepage
-%
-
-% Clear double page without any header or footer at end of chapters
-\newcommand{\emptydoublepage}{\clearpage\thispagestyle{empty}\cleardoublepage}
-
 \mode<all>
+
+% ---------------------------------------------------------------------------
+% enumitem settings – avoid recursion with Beamer (fixed 2025‑05‑02)
+% ---------------------------------------------------------------------------
+\setitemize[1]{%
+  label=\textbullet,
+  labelindent=0pt,
+  leftmargin=*,
+  labelsep=0.6em,
+  itemsep=0.2em,
+  topsep=0.2em
+}
