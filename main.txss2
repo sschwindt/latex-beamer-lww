@@ -1,22 +1,10 @@
 {
     "InternalPDFViewer": {
-        "Embedded": true,
+        "Embedded": false,
         "File": ""
     },
     "Session": {
         "Bookmarks": [
-            {
-                "bookmarkNumber": -1,
-                "fileName": "../../../../../3000 Teaching/3400 MyClasses/MMM/2021 WiSe/02-numerics-theory/dimensionality.tex",
-                "lineNumber": 11,
-                "text": "dimensionality.tex\n\\sscFig{hecras-tilted}{Mitteln der Querschnittsgeometrie}"
-            },
-            {
-                "bookmarkNumber": 1,
-                "fileName": "../../../../../3000 Teaching/3400 MyClasses/MMM/2021 WiSe/03-modeling-approach/cali-vali.tex",
-                "lineNumber": 12,
-                "text": "cali-vali.tex\n%\t\\begin{itemize}"
-            }
         ],
         "CurrentFile": "main.tex",
         "FileVersion": 1,
