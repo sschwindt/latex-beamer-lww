@@ -30,7 +30,7 @@
 % ------------------------------------------------------------------
 \RequirePackage{enumitem}
 \RequirePackage{tcolorbox}
-\RequirePackage[absolute,overlay]{textpos}
+\RequirePackage{textpos}
 \RequirePackage{caption}
 \RequirePackage{perpage}
 \RequirePackage{fancyhdr}
@@ -40,6 +40,7 @@
 \RequirePackage{pifont}
 \RequirePackage{float}
 \RequirePackage{alltt}
+\RequirePackage{fontawesome}
 
 % Defer link color setup until after color definitions
 \AtBeginDocument{
@@ -55,7 +56,6 @@
 \mode<presentation>
 
 % Requirement
-% \usetikzlibrary{3d,angles,arrows,arrows.meta,calc,intersections,overlay-beamer-styles,positioning,shadows.blur,shapes.geometric,shapes.symbols}
 \pgfplotsset{compat=1.11}
 \usepgfplotslibrary{fillbetween}
 \pgfdeclarelayer{bg}
@@ -99,14 +99,9 @@
 % \end{textblock*}
 
 % Global Background 
-% \usebackgroundtemplate%
-%{%
-%     \includegraphics[width=\paperwidth,height=\paperheight]{fig/cache-creek.jpg}%
-% }
-% usage:
 % {
-% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{kitten.jpg}}%
-% \begin{frame}{Kitten}
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{cache-creek.jpg}}%
+% \begin{frame}{Cache-Creek}
 % ...
 % \end{frame}
 % }
@@ -370,7 +365,8 @@
 }
 
 % TIKZSTYLES ----------------------------------------------------------------
-
+% circled numbers
+\DeclareRobustCommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
 % FLOW-CHART ELEMENTS
 % definition boxes with rounded corners
 \tikzstyle{defbox} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=green_dark, fill=green!5, blur shadow={shadow blur steps=5}]
@@ -572,4 +568,3 @@
   {\end{frame}}
 
 \mode<all>
-
