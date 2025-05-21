@@ -1,4 +1,4 @@
-# A LaTex beamer template
+## A LaTex beamer template
 
 This template constitutes a LaTex environment for creating presentations that align with the University of Stuttgart's corporate design. In particular, the template is adapted to presentations given by or hold at the [Department of Hydraulic Engineering and Water Resources Management](https://www.iws.uni-stuttgart.de/en/lww/).
 
@@ -8,9 +8,18 @@ This template constitutes a LaTex environment for creating presentations that al
 
 Basic styles are defined with inline comments in `beamerthemelww.sty` and the `main.tex` latex files.
 
-**For compiling slides, I recommend to use**
+***
+
+### For compiling slides, I recommend to use
 
 * LuaLaTex compiler
 * [TEXstudio](https://www.texstudio.org/#download) - use `main.txss` to load the repository as a session
 
 The repository is private because of unlcear licenses of Uni Stuttgart logo reuse.
+
+***
+
+### To show slides, I recommend pympress
+
+Pympress works similarly to presenter mode in office software. It is available via `apt` on Debian-based Linux. For all other platforms, such as macOS or Windows, visit their GitHub page: https://pympress.github.io
+
